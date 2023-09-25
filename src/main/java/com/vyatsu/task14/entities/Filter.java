@@ -1,6 +1,7 @@
 package com.vyatsu.task14.entities;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

@@ -14,7 +14,6 @@ CREATE TABLE products (
 CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
-    authorities VARCHAR(50) NOT NULL,
     enabled boolean NOT NULL,
     PRIMARY KEY (username)
 );
@@ -30,7 +29,6 @@ CREATE TABLE authorities (
 
 insert into users values ('admin', '{noop}admin','вася', true);
 insert into users values ('user', '{noop}user', 'колян', true);
-
 
 
 insert into authorities values ('admin', 'ROLE_ADMIN');

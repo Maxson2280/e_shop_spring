@@ -38,7 +38,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <div sec:authorize="isAuthenticated()">
-                        <div class="nav-link mr-3" sec:authentication="principal"></div>
+                        <div class="nav-link mr-3" sec:authentication="principal.username"></div>
                     </div>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
