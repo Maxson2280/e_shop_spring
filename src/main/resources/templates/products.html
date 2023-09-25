@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color: rgba(255,187,0,0.61)">
+<div th:replace="~{navigation :: navi(Home)}"></div>
+<div class="container">
+    <div class="row">
+       <div class="col-sm">
+           <h2 class="mt-2" th:text="${products.size() == 0 || products.size() < 0} ? 'Нет доступных товаров' : 'Доступные товары'"></h2>
+       </div>
+        <div class="col-sm">
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm justify-content-end mt-3">
+                   <li class="page-item" th:each="p : ${pages}" th:classappend="${p + 1 == page} ? 'active'">
+                        <a class="page-link" th:text="${p + 1}" th:href="@{'products?page=' + ${p + 1}}"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-3 float-left" th:if="${products.size() != 0 || products.size() > 0}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form th:action="@{/products}" method="get" class="form-horizontal">
+                        <div class="input-group mb-2">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input th:value="${title != null} ? ${title}" name="title" placeholder="Название" class="form-control">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="number" th:value="${minPrice != null} ? ${minPrice}" name="minPrice" placeholder="Мин. цена" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="number" th:value="${maxPrice != null} ? ${maxPrice}" name="maxPrice" placeholder="Макс. цена" class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-block btn-primary">Применить</button>
+                              <button type="reset" class="btn btn-block btn-primary" onclick="resetFilter()">Сбросить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg">
+            <div class="card" th:if="${products.size() != 0 || products.size() > 0}">
+                <div class="card-body">
+                    <h3>Выбор покупателей</h3>
+                    <div class="row mt-3">
+                        <div class="col-sm-2 col-md-4" th:each="product : ${topProducts}">
+                            <div class="card border-primary">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${product.title}"></h5>
+                                    <p class="card-text" th:text="'Цена : ' + ${product.price} + ' рублей'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3" th:each="product : ${products}">
+                <div class="card w-55 mb-3" style="height: 9em">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.title}"></h5>
+                        <p class="card-text" th:text="'Цена : ' + ${product.price} + ' рублей'"></p>
+                        <a class="btn btn-outline-primary btn-sm mr-2" th:href="@{'/products/show/' + ${product.id}}" th:text="Просмотреть"/>
+                        <a sec:authorize="hasRole('ADMIN')" class="btn btn-outline-primary btn-sm mr-2" th:href="@{'/products/edit/' + ${product.id}}" th:text="Изменить"></a>
+                        <a sec:authorize="hasRole('ADMIN')" class="btn btn-outline-primary btn-sm mr-2" th:href="@{'/products/delete/' + ${product.id}}" th:text="Удалить"></a>
+                        <a sec:authorize="hasRole('ADMIN')" class="btn btn-outline-primary btn-sm mr-2" th:href="@{'/edit/{id}' + ${product.quantity}}" th:text="Сохранить"></a>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function resetFilter() {
+        window.location = '/products';
+    }
+</script>
+
+</body>
+</html>

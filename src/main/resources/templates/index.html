@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>GeekWinterMarket</title>
+
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color: rgba(255,187,0,0.61)">
+
+<div th:replace="~{navigation :: navi(Home)}" />
+
+<div class="container">
+    <br>
+    <h1 class="pb-3">Java Интернет-магазин</h1>
+    <h5>Добро пожаловать в наш интернет-магазин, написанный на Spring</h5>
+</div>
+</body>
+</html>
